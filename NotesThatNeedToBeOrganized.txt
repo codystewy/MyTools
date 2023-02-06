@@ -6,3 +6,8 @@ For example, the request /resources?sort=name,ASC&sort=title,DESC would sort by 
 
 https://nexpose.fub.local:3780/api/3/assets/4029/vulnerabilities?page=2&size=500
 
+In order to link a local repository to a remote github repo you must first create the github repo on github website. Not sure how to do it remotely via cli but would be nice. 
+
+then on local git CLI create the older that you want the repositry to be downloaded into. The root of the repo will have README.md and then folder strcucture starts. It does not unpack into a "MyTools" folder is why I say this. 
+
+
