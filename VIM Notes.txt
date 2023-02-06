@@ -1,0 +1,4 @@
+put double quotes around current word
+ciw "" esc P
+Enclosing in parentheses
+bcw()<Esc>P

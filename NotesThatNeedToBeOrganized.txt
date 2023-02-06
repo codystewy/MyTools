@@ -1,0 +1,8 @@
+For example, /resources?page=2&size=10 will return page 3, with 10 records per page, giving results 21-30.
+
+The maximum page size for a request is 500.
+
+For example, the request /resources?sort=name,ASC&sort=title,DESC would sort by name ascending and title descending, in that order.
+
+https://nexpose.fub.local:3780/api/3/assets/4029/vulnerabilities?page=2&size=500
+

@@ -1,0 +1,35 @@
+https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.protecteddata?view=dotnet-plat-ext-7.0#examples
+
+
+'Powershell OneLiner to encrypt a password to file:
+' ConvertTo-SecureString -String "ThisIsMySecurePassword" -AsPlainText -Force | ConvertFrom-SecureString > .\Password.txt
+
+'Powershell OneLiner to decrypt that password
+' (New-Object PSCredential "user",(ConvertTo-SecureString (Get-Content .\Password.txt))).GetNetworkCredential().Password
+
+'You could then embed this into VBScript so the password is not stored in the script
+'powershell.exe -NonInteractive -NoLogo -Command "(New-Object PSCredential 'user',(ConvertTo-SecureString (Get-Content .\Desktop\Password.txt))).GetNetworkCredential().Password"
+
+Set oShell = WScript.CreateObject("WScript.Shell")
+Set oExec = oShell.Exec("powershell.exe -NonInteractive -NoLogo -Command ""(New-Object PSCredential 'user',(ConvertTo-SecureString (Get-Content .\Desktop\Password.txt))).GetNetworkCredential().Password""")
+WScript.Echo oExec.StdOut.ReadLine
+
+
+
+https://stackoverflow.com/questions/58411318/powershell-on-windows-windows-data-protection-api-dpapi-is-not-supported-on
+
+
+I figured it out. The reason this didn't work in PowerShell but in PowerShell Core was that I actually loaded the wrong assembly in PowerShell.
+
+As soon as I loaded the correct assembly for .net 4.6.1 it worked.
+
+Add-Type -Path "D:\_packages\System.Security.Cryptography.ProtectedData.4.6.0\lib\net461\System.Security.Cryptography.ProtectedData.dll"
+$scope = [System.Security.Cryptography.DataProtectionScope]::CurrentUser
+$ciphertext = [System.Text.Encoding]::UTF8.GetBytes("hallo welt")
+$protected = [System.Security.Cryptography.ProtectedData]::Protect($ciphertext, $null, $scope)
+$unprotected = [System.Security.Cryptography.ProtectedData]::Unprotect($protected, $null, $scope)
+$text = [System.Text.Encoding]::UTF8.GetString($unprotected)
+Write-Output $text
+
+
+[CAUTION: This email originated from outside of First United Bank. Do not click links or open attachments unless you recognize the sender and know the content is safe]
