@@ -13,6 +13,3 @@ then on local git CLI create the older that you want the repositry to be downloa
 git init
 git remote add origin https://github.com/codystewy/MyTools
 git pull origin master
-
-
-
